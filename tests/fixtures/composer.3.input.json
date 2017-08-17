@@ -1,0 +1,13 @@
+{
+    "license": "MIT",
+    "name": "mleko/wingman",
+    "require": {
+        "mleko/wingman": "0.1",
+        "mleko/narrator": "0.1",
+        "php": "7.0",
+        "acme/package123": "1.2",
+        "acme/package3": "1.2",
+        "acme/package12": "1.2",
+        "acme/package13": "1.2"
+    }
+}

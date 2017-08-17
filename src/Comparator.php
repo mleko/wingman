@@ -24,7 +24,7 @@ class Comparator
         }
         // none found
         if ($indexA === $indexB) {
-            return strcmp($keyA, $keyB);
+            return strnatcmp($keyA, $keyB);
         }
         return null === $indexA ? 1 : -1;
     }
