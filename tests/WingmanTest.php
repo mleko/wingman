@@ -20,8 +20,8 @@ class WingmanTest extends TestCase
      */
     public function testFormat($expected, $input)
     {
-        $fifer = new Wingman();
-        $actual = $fifer->format($input);
+        $wingman = new Wingman();
+        $actual = $wingman->format($input);
         $this->assertEquals($expected, $actual);
         $jsonOptions = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         $this->assertEquals(json_encode($expected, $jsonOptions), json_encode($actual, $jsonOptions));

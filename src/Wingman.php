@@ -38,8 +38,8 @@ class Wingman
         "non-feature-branches"
     ];
 
-    /** @var Rule[] */
-    private $config = [];
+    /** @var Rules */
+    private $rules = [];
 
     /**
      * Wingman constructor.
@@ -47,35 +47,25 @@ class Wingman
      */
     public function __construct(?array $keys = null)
     {
-        $this->config = $this->normalizeConfig(
+        $this->rules = $this->normalizeConfig(
             null === $keys ? self::$order : $keys
         );
     }
 
     public function format($composerJson)
     {
-        return $this->subFormat($composerJson, $this->config);
+        return $this->subFormat($composerJson, $this->rules);
     }
 
     /**
      * @param array $element
-     * @param Rule[] $config
+     * @param Rules $rules
      * @return array|object
      */
-    private function subFormat($element, $config)
+    private function subFormat($element, $rules)
     {
-        $element = $this->sort($element, new Comparator($config));
-        foreach ($element as $key => &$value) {
-            foreach ($config as $rule) {
-                if ($rule->isMatch($key)) {
-                    if (is_object($value) && $rule->isSortChildren()) {
-                        $value = $this->subFormat($value, $rule->getChildRules());
-                    }
-                    break;
-                }
-            }
-        }
-        return $element;
+        $element = $this->sort($element, new Comparator($rules));
+        return $this->formatChildren($element, $rules);
     }
 
     private function sort($item, callable $comparator)
@@ -95,18 +85,38 @@ class Wingman
 
     /**
      * @param array $config
-     * @return Rule[]
+     * @return Rules
      */
-    private function normalizeConfig(array $config): array
+    private function normalizeConfig(array $config): Rules
     {
         $rules = [];
         foreach ($config as $key => $value) {
             if (is_numeric($key)) {
-                $rules[] = new Rule($value, false, []);
+                $rules[] = new Rule($value, false, null);
             } else {
-                $rules[] = new Rule($key, true, true === $value ? [] : $this->normalizeConfig((array)$value));
+                $rules[] = new Rule($key, true, true === $value ? null : $this->normalizeConfig((array)$value));
             }
         }
-        return $rules;
+        return new Rules($rules);
+    }
+
+    /**
+     * @param array $element
+     * @param Rules $rules
+     * @return array|object
+     */
+    private function formatChildren($element, $rules)
+    {
+        foreach ($element as $key => &$value) {
+            if (!is_object($value)) {
+                continue;
+            }
+            $index = $rules->findMatching($key);
+            if (null === $index) {
+                continue;
+            }
+            $value = $this->subFormat($value, $rules->getRule($index)->getChildRules());
+        }
+        return $element;
     }
 }

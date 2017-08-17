@@ -6,20 +6,18 @@ namespace Mleko\Wingman;
 
 class Comparator
 {
-    private $keys = [];
+    /** @var Rules */
+    private $rules;
 
-    /**
-     * @param Rule[] $keys
-     */
-    public function __construct(array $keys)
+    public function __construct(Rules $rules)
     {
-        $this->keys = $keys;
+        $this->rules = $rules;
     }
 
     public function compare($keyA, $keyB): int
     {
-        $indexA = $this->testKey($keyA, $this->keys);
-        $indexB = $this->testKey($keyB, $this->keys);
+        $indexA = $this->rules->findMatching($keyA);
+        $indexB = $this->rules->findMatching($keyB);
         // both found
         if (null !== $indexA && null !== $indexB) {
             return $indexA - $indexB;
@@ -34,20 +32,5 @@ class Comparator
     public function __invoke($keyA, $keyB)
     {
         return $this->compare($keyA, $keyB);
-    }
-
-    /**
-     * @param string $key
-     * @param Rule[] $rules
-     * @return int|null
-     */
-    private function testKey(string $key, $rules): ?int
-    {
-        foreach ($rules as $index => $rule) {
-            if ($rule->isMatch($key)) {
-                return $index;
-            }
-        }
-        return null;
     }
 }
