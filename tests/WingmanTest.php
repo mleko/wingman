@@ -6,14 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class WingmanTest extends TestCase
 {
-    private static function stdClass($data)
-    {
-        $c = new \stdClass();
-        foreach ($data as $key => $value) {
-            $c->{$key} = $value;
-        }
-        return $c;
-    }
 
     /**
      * @dataProvider caseProvider
@@ -29,38 +21,21 @@ class WingmanTest extends TestCase
 
     public function caseProvider()
     {
-        return
-            [
-                [
-                    [
-                        "name" => "mleko/wingman",
-                        "license" => "MIT"
-                    ],
-                    [
-                        "license" => "MIT",
-                        "name" => "mleko/wingman"
-                    ]
-                ],
-                [
-                    [
-                        "name" => "mleko/wingman",
-                        "license" => "MIT",
-                        "require" => self::stdClass([
-                            "php" => "7.0",
-                            "mleko/narrator" => "0.1",
-                            "mleko/wingman" => "0.1"
-                        ])
-                    ],
-                    [
-                        "license" => "MIT",
-                        "name" => "mleko/wingman",
-                        "require" => self::stdClass([
-                            "mleko/wingman" => "0.1",
-                            "mleko/narrator" => "0.1",
-                            "php" => "7.0"
-                        ])
-                    ]
-                ]
+        $cases = [];
+        $iterator = new \DirectoryIterator(__DIR__ . "/fixtures");
+        $pattern = "!^composer\.(\d+)\.input\.json$!";
+        foreach ($iterator as $item) {
+            if ($item->isDot()) {
+                continue;
+            }
+            if (!preg_match($pattern, $item->getFilename(), $matches)) {
+                continue;
+            }
+            $cases[] = [
+                json_decode(file_get_contents(__DIR__ . "/fixtures/composer." . $matches[1] . ".expected.json")),
+                json_decode(file_get_contents(__DIR__ . "/fixtures/composer." . $matches[1] . ".input.json"))
             ];
+        }
+        return $cases;
     }
 }

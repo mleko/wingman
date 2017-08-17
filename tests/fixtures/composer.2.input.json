@@ -1,0 +1,9 @@
+{
+    "license": "MIT",
+    "name": "mleko/wingman",
+    "require": {
+        "mleko/wingman": "0.1",
+        "mleko/narrator": "0.1",
+        "php": "7.0"
+    }
+}
