@@ -26,8 +26,8 @@ class ComparatorTest extends TestCase
         return [
             [0, "a", "a", []],
             [1, "a", "b", []],
-            [-1, "a", "b", ["b"]],
-            [-1, "a", "b", ["b", "a"]],
+            [-1, "a", "b", [new Rule("b")]],
+            [-1, "a", "b", [new Rule("b"), new Rule("a")]],
         ];
     }
 }
