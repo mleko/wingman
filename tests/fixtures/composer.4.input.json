@@ -1,0 +1,40 @@
+{
+    "conflict": {
+        "acme/pack4": "1.0",
+        "acme/pack3": "1.0"
+    },
+    "provide": {
+        "acme/pack32": "1.0",
+        "acme/pack64": "1.0"
+    },
+    "replace": {
+        "acme/pack44": "1.0",
+        "acme/pack31": "1.0"
+    },
+    "suggest": {
+        "acme/pack34": "1.0",
+        "acme/pack23": "1.0"
+    },
+    "require-dev": {
+        "acme/pack2": "1.0",
+        "acme/pack1": "1.0"
+    },
+    "name": "mleko/wingman",
+    "license": "MIT",
+    "require": {
+        "php": "7.0",
+        "acme/package3": "1.2",
+        "acme/package12": "1.2",
+        "acme/package13": "1.2",
+        "acme/package123": "1.2",
+        "mleko/narrator": "0.1",
+        "mleko/wingman": "0.1"
+    },
+    "extraOption": "value",
+    "anotherExtraOption": "value",
+    "yetAnotherExtraOption": "value",
+    "scripts": {
+        "test": "phpunit",
+        "noop": "sleep 0"
+    }
+}

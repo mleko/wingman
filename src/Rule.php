@@ -23,13 +23,13 @@ class Rule
     {
         $this->test = "!^$test$!";
         $this->sortChildren = $sortChildren;
-        $this->childRules = $childRules;
+        $this->childRules = $childRules ?: new Rules([]);
     }
 
     /**
      * @return bool
      */
-    public function isSortChildren(): bool
+    public function sortChildren(): bool
     {
         return $this->sortChildren;
     }

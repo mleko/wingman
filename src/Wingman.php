@@ -18,11 +18,11 @@ class Wingman
         "authors",
         "support",
         "require" => ["php", "hhvm", "ext.*", "lib.*"],
-        "require-dev",
-        "conflict",
-        "replace",
-        "provide",
-        "suggest",
+        "require-dev" => ["php", "hhvm", "ext.*", "lib.*"],
+        "conflict" => true,
+        "replace" => true,
+        "provide" => true,
+        "suggest" => true,
         "autoload",
         "autoload-dev",
         "include-path",
@@ -62,7 +62,7 @@ class Wingman
      * @param Rules $rules
      * @return array|object
      */
-    private function subFormat($element, $rules)
+    private function subFormat($element, Rules $rules)
     {
         $element = $this->sort($element, new Comparator($rules));
         return $this->formatChildren($element, $rules);
@@ -115,7 +115,11 @@ class Wingman
             if (null === $index) {
                 continue;
             }
-            $value = $this->subFormat($value, $rules->getRule($index)->getChildRules());
+            $rule = $rules->getRule($index);
+            if (!$rule->sortChildren()) {
+                continue;
+            }
+            $value = $this->subFormat($value, $rule->getChildRules());
         }
         return $element;
     }
