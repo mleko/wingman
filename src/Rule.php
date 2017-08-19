@@ -10,7 +10,7 @@ class Rule
     private $test;
     /** @var bool */
     private $sortChildren;
-    /** @var Rules|null */
+    /** @var Rules */
     private $childRules;
 
     /**
@@ -19,7 +19,7 @@ class Rule
      * @param bool $sortChildren
      * @param Rules $childRules
      */
-    public function __construct(string $test, bool $sortChildren = false, ?Rules $childRules = null)
+    public function __construct(string $test, bool $sortChildren = false, Rules $childRules = null)
     {
         $this->test = "!^$test$!";
         $this->sortChildren = $sortChildren;
@@ -37,7 +37,7 @@ class Rule
     /**
      * @return Rules
      */
-    public function getChildRules(): ?Rules
+    public function getChildRules(): Rules
     {
         return $this->childRules;
     }
