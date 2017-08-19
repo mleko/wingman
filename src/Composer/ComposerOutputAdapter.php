@@ -20,6 +20,6 @@ class ComposerOutputAdapter implements Output
 
     public function write($message)
     {
-        $this->output->write($message);
+        $this->output->write($message, false);
     }
 }
