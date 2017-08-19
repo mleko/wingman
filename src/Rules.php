@@ -18,7 +18,11 @@ class Rules
         $this->rules = $rules;
     }
 
-    public function findMatching(string $key): ?int
+    /**
+     * @param string $key
+     * @return int|null
+     */
+    public function findMatching(string $key)
     {
         foreach ($this->rules as $index => $rule) {
             if ($rule->isMatch($key)) {
@@ -28,7 +32,11 @@ class Rules
         return null;
     }
 
-    public function getRule(int $index): ?Rule
+    /**
+     * @param int $index
+     * @return Rule|null
+     */
+    public function getRule(int $index)
     {
         return isset($this->rules[$index]) ? $this->rules[$index] : null;
     }

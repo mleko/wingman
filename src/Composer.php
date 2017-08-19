@@ -8,7 +8,7 @@ use Composer\Script\Event;
 
 class Composer
 {
-    public static function format(Event $event): void
+    public static function format(Event $event)
     {
         $composerJsonPath = $event->getComposer()->getConfig()->getConfigSource()->getName();
         if (!is_readable($composerJsonPath) || !is_writable($composerJsonPath)) {
