@@ -14,11 +14,6 @@ class Formatter
 
     public static function sort($item, callable $comparator)
     {
-        if (is_array($item)) {
-            $copy = $item;
-            uksort($copy, $comparator);
-            return $copy;
-        }
         if (is_object($item)) {
             $copy = (array)$item;
             uksort($copy, $comparator);
@@ -28,7 +23,7 @@ class Formatter
     }
 
     /**
-     * @param array $element
+     * @param array|object $element
      * @param Rules $rules
      * @return array|object
      */
