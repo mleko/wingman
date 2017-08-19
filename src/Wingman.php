@@ -54,33 +54,7 @@ class Wingman
 
     public function format($composerJson)
     {
-        return $this->subFormat($composerJson, $this->rules);
-    }
-
-    /**
-     * @param array $element
-     * @param Rules $rules
-     * @return array|object
-     */
-    private function subFormat($element, Rules $rules)
-    {
-        $element = $this->sort($element, new Comparator($rules));
-        return $this->formatChildren($element, $rules);
-    }
-
-    private function sort($item, callable $comparator)
-    {
-        if (is_array($item)) {
-            $copy = $item;
-            uksort($copy, $comparator);
-            return $copy;
-        }
-        if (is_object($item)) {
-            $copy = (array)$item;
-            uksort($copy, $comparator);
-            return (object)$copy;
-        }
-        return $item;
+        return Formatter::format($composerJson, $this->rules);
     }
 
     /**
@@ -98,29 +72,5 @@ class Wingman
             }
         }
         return new Rules($rules);
-    }
-
-    /**
-     * @param array $element
-     * @param Rules $rules
-     * @return array|object
-     */
-    private function formatChildren($element, $rules)
-    {
-        foreach ($element as $key => &$value) {
-            if (!is_object($value)) {
-                continue;
-            }
-            $index = $rules->findMatching($key);
-            if (null === $index) {
-                continue;
-            }
-            $rule = $rules->getRule($index);
-            if (!$rule->sortChildren()) {
-                continue;
-            }
-            $value = $this->subFormat($value, $rule->getChildRules());
-        }
-        return $element;
     }
 }
