@@ -23,7 +23,6 @@ class FormatCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $input->getArgument("path");
-        $output->writeln(sprintf("<info>Format file: %s</info>", $path));
         $wingman = new Wingman();
         $wingman->formatFile($path, new ConsoleOutputAdapter($output));
     }
