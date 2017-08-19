@@ -45,7 +45,7 @@ class Wingman
      * Wingman constructor.
      * @param string[]|null $keys
      */
-    public function __construct(?array $keys = null)
+    public function __construct(array $keys = null)
     {
         $this->rules = $this->normalizeConfig(
             null === $keys ? self::$order : $keys
