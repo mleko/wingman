@@ -30,7 +30,9 @@
         "mleko/narrator": "0.1",
         "mleko/wingman": "0.1"
     },
-    "extraOption": "value",
+    "extraOption": {
+        "key": "value"
+    },
     "anotherExtraOption": "value",
     "yetAnotherExtraOption": "value",
     "scripts": {

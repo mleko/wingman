@@ -35,6 +35,8 @@
         "noop": "sleep 0"
     },
     "anotherExtraOption": "value",
-    "extraOption": "value",
+    "extraOption": {
+        "key": "value"
+    },
     "yetAnotherExtraOption": "value"
 }
