@@ -4,6 +4,8 @@
 namespace Mleko\Wingman;
 
 
+use Mleko\Wingman\IO\Output;
+
 class Wingman
 {
     private static $order = [
@@ -55,6 +57,18 @@ class Wingman
     public function format($composerJson)
     {
         return Formatter::format($composerJson, $this->rules);
+    }
+
+    public function formatFile($path, Output $output)
+    {
+        if (!is_readable($path) || !is_writable($path)) {
+            $output->write("composer.json is not readable/writable\n");
+            return false;
+        }
+        $output->write(sprintf("Formatting file: %s\n", $path));
+        $composerJson = json_decode(file_get_contents($path));
+        $composerJson = $this->format($composerJson);
+        return false !== file_put_contents($path, json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n");
     }
 
     /**
