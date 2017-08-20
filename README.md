@@ -8,7 +8,7 @@ List and order of keys is derived from composer [docs](https://getcomposer.org/d
 ## CLI usage
 Install `mleko/wingman` as global package
 ```
-$ composer require --global mleko/wingman
+$ composer global require mleko/wingman
 ```
 
 Format specific `composer.json` file
