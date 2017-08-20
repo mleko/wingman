@@ -11,14 +11,14 @@ Install `mleko/wingman` as global package
 $ composer require --global mleko/wingman
 ```
 
-Format specific composer.json
+Format specific `composer.json` file
 
 ```
 $ wingman format /project-dir/composer.json
 Formatting file: /project-dir/composer.json
 ```
 
-Format composer.json found in current directory
+Format `composer.json` in current directory
 
 ```
 $ cd /project-dir 
