@@ -1,7 +1,13 @@
 {
     "name": "mleko/wingman",
-    "description": "Sort composer.json",
+    "description": "Sort composer.json based on the well-known composer.json keys",
     "type": "library",
+    "keywords": [
+        "format",
+        "sort",
+        "composer.json"
+    ],
+    "homepage": "https://github.com/mleko/wingman",
     "license": "MIT",
     "authors": [
         {
@@ -33,5 +39,8 @@
         "post-update-cmd": [
             "Mleko\\Wingman\\Composer\\EventHandler::format"
         ]
-    }
+    },
+    "bin": [
+        "wingman"
+    ]
 }
