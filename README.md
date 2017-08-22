@@ -34,7 +34,6 @@ $ vendor/bin/wingman register
 Register wingman in file: ./composer.json
 Wingman registered
 Formatting file: ./composer.json
-
 ```
 
 `composer.json` will be reformatted after every package update.
