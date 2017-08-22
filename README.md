@@ -30,7 +30,7 @@ Formatting file: ./composer.json
 Install `mleko/wingman` as dependency
 ```
 $ composer require --dev mleko/wingman
-$ vendor/bin/wingman register
+$ vendor/bin/wingman --register
 Register wingman in file: ./composer.json
 Wingman registered
 Formatting file: ./composer.json

@@ -14,7 +14,7 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class RegisterCommandTest extends TestCase
+class FormatCommandTest extends TestCase
 {
     /**
      * @var vfsStreamDirectory
@@ -36,12 +36,13 @@ class RegisterCommandTest extends TestCase
         $virtualFile->setContent(json_encode(["name" => "acme/test"]));
 
         $application = new Application();
-        $registerCommand = $application->find("register");
+        $registerCommand = $application->find("format");
         $commandTester = new CommandTester($registerCommand);
 
         $resultCode = $commandTester->execute([
             "command" => $registerCommand->getName(),
-            "path" => $virtualFile->url()
+            "path" => $virtualFile->url(),
+            "--register" => true
         ]);
 
         $this->assertEquals(0, $resultCode);

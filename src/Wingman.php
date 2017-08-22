@@ -65,14 +65,9 @@ class Wingman
         return Formatter::format($composerJson, $this->rules);
     }
 
-    public function formatFile($path, Output $output)
+    public function formatFile($path, Output $output, $register = false)
     {
-        return $this->processFile($path, $output);
-    }
-
-    public function registerInFile($path, Output $output)
-    {
-        return $this->processFile($path, $output, true);
+        return $this->processFile($path, $output, $register);
     }
 
     public function register($composerJson)
