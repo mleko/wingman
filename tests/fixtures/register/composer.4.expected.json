@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "post-update-cmd": [
+            "noop",
+            "Mleko\\Wingman\\Composer\\EventHandler::format"
+        ]
+    }
+}

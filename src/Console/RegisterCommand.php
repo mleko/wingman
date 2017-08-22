@@ -16,13 +16,13 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class FormatCommand extends Command
+class RegisterCommand extends Command
 {
     protected function configure()
     {
         parent::configure();
-        $this->setName("format")
-            ->setDescription("Format composer.json file")
+        $this->setName("register")
+            ->setDescription("Register wingman as post-update script and format composer.json file")
             ->addArgument("path", InputArgument::OPTIONAL, "Path to composer.json file", "./composer.json");
     }
 
@@ -30,7 +30,7 @@ class FormatCommand extends Command
     {
         $path = $input->getArgument("path");
         $wingman = new Wingman();
-        $wingman->formatFile($path, new ConsoleOutputAdapter($output));
+        $wingman->registerInFile($path, new ConsoleOutputAdapter($output));
     }
 
 }

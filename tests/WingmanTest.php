@@ -44,22 +44,26 @@ class WingmanTest extends TestCase
 
     public function caseProvider()
     {
-        $cases = [];
-        $iterator = new \DirectoryIterator(__DIR__ . "/fixtures");
         $pattern = "!^composer\.(\d+)\.input\.json$!";
-        foreach ($iterator as $item) {
-            if ($item->isDot()) {
-                continue;
-            }
-            if (!preg_match($pattern, $item->getFilename(), $matches)) {
-                continue;
-            }
-            $cases[] = [
-                json_decode(file_get_contents(__DIR__ . "/fixtures/composer." . $matches[1] . ".expected.json")),
-                json_decode(file_get_contents(__DIR__ . "/fixtures/composer." . $matches[1] . ".input.json"))
-            ];
-        }
-        return $cases;
+        return $this->fixtureReader(__DIR__ . "/fixtures", $pattern);
+    }
+
+    /**
+     * @dataProvider registerCaseProvider
+     */
+    public function testRegister($expected, $input)
+    {
+        $wingman = new Wingman();
+        $actual = $wingman->register($input);
+        $this->assertEquals($expected, $actual);
+        $jsonOptions = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+        $this->assertEquals(json_encode($expected, $jsonOptions), json_encode($actual, $jsonOptions));
+    }
+
+    public function registerCaseProvider()
+    {
+        $pattern = "!^composer\.(\d+)\.input\.json$!";
+        return $this->fixtureReader(__DIR__ . "/fixtures/register", $pattern);
     }
 
     public function testMissingFile()
@@ -116,5 +120,29 @@ class WingmanTest extends TestCase
         $this->assertEquals("Formatting file: vfs://testRoot/composer.json\n", $output->messages[0]);
 
         $this->assertEquals(file_get_contents(__DIR__ . "/fixtures/composer.1.expected.json"), $virtualFile->getContent());
+    }
+
+    /**
+     * @param $path
+     * @param $pattern
+     * @return array
+     */
+    private function fixtureReader($path, $pattern): array
+    {
+        $iterator = new \DirectoryIterator($path);
+        $cases = [];
+        foreach ($iterator as $item) {
+            if ($item->isDot()) {
+                continue;
+            }
+            if (!preg_match($pattern, $item->getFilename(), $matches)) {
+                continue;
+            }
+            $cases[] = [
+                json_decode(file_get_contents("$path/composer." . $matches[1] . ".expected.json")),
+                json_decode(file_get_contents("$path/composer." . $matches[1] . ".input.json"))
+            ];
+        }
+        return $cases;
     }
 }

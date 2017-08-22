@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "post-update-cmd": [
+            "noop"
+        ]
+    }
+}
