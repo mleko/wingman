@@ -23,25 +23,18 @@ Format `composer.json` in current directory
 ```
 $ cd /project-dir 
 $ wingman
-Formatting file: /project-dir/composer.json
+Formatting file: ./composer.json
 ```
 
 ## Composer script
 Install `mleko/wingman` as dependency
 ```
 $ composer require --dev mleko/wingman
+$ vendor/bin/wingman register
+Register wingman in file: ./composer.json
+Wingman registered
+Formatting file: ./composer.json
+
 ```
 
-add `post-update-cmd` script `Mleko\\Wingman\\Composer\\EventHandler::format`
-
-example
-```
-{
-    ...
-    "scripts": {
-            "post-update-cmd": [
-                "Mleko\\Wingman\\Composer\\EventHandler::format"
-            ]
-        }
-}
-```
+`composer.json` will be reformatted after every package update.

@@ -1,0 +1,9 @@
+{
+    "license": "MIT",
+    "name": "mleko/wingman",
+    "scripts": {
+        "post-update-cmd": [
+            "Mleko\\Wingman\\Composer\\EventHandler::format"
+        ]
+    }
+}

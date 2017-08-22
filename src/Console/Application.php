@@ -17,6 +17,7 @@ class Application extends \Symfony\Component\Console\Application
         parent::__construct("Wingman");
 
         $this->add(new FormatCommand());
+        $this->add(new RegisterCommand());
 
         $this->setDefaultCommand("format");
     }
