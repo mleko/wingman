@@ -67,7 +67,18 @@ class Wingman
 
     public function formatFile($path, Output $output, $register = false)
     {
-        return $this->processFile($path, $output, $register);
+        $composerJson = $this->readFile($path, $output);
+        if (null === $composerJson) {
+            return false;
+        }
+        if ($register) {
+            $output->write(sprintf("Register wingman in file: %s\n", $path));
+            $composerJson = $this->register($composerJson);
+            $output->write("Wingman registered\n");
+        }
+        $output->write(sprintf("Formatting file: %s\n", $path));
+        $composerJson = $this->format($composerJson);
+        return $this->writeFile($path, $composerJson);
     }
 
     public function register($composerJson)
@@ -87,22 +98,6 @@ class Wingman
             $puc = [$puc, "Mleko\\Wingman\\Composer\\EventHandler::format"];
         }
         return $composerJson;
-    }
-
-    private function processFile($path, Output $output, $register = false)
-    {
-        $composerJson = $this->readFile($path, $output);
-        if (null === $composerJson) {
-            return false;
-        }
-        if ($register) {
-            $output->write(sprintf("Register wingman in file: %s\n", $path));
-            $composerJson = $this->register($composerJson);
-            $output->write("Wingman registered\n");
-        }
-        $output->write(sprintf("Formatting file: %s\n", $path));
-        $composerJson = $this->format($composerJson);
-        return $this->writeFile($path, $composerJson);
     }
 
     /**
