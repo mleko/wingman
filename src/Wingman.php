@@ -48,6 +48,7 @@ class Wingman
 
     /** @var Rules */
     private $rules = [];
+    private $mistakeChecker;
 
     /**
      * Wingman constructor.
@@ -58,6 +59,7 @@ class Wingman
         $this->rules = $this->normalizeConfig(
             null === $keys ? self::$order : $keys
         );
+        $this->mistakeChecker = new MistakeChecker();
     }
 
     public function format($composerJson)
@@ -77,6 +79,7 @@ class Wingman
             $output->write("Wingman registered\n");
         }
         $output->write(sprintf("Formatting file: %s\n", $path));
+        $this->mistakeChecker->checkForMistakes($composerJson, $output);
         $composerJson = $this->format($composerJson);
         return $this->writeFile($path, $composerJson);
     }
