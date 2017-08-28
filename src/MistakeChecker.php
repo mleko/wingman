@@ -33,13 +33,13 @@ class MistakeChecker
      */
     public function __construct(array $rules = null)
     {
-        $this->rules = null === $rules ? static::$possibleMistakes : $rules;
+        $this->rules = null === $rules ? self::$possibleMistakes : $rules;
     }
 
     public function checkForMistakes($composerJson, Output $output)
     {
         $mistakes = array_intersect_key($this->rules, (array)$composerJson);
-        if (!$mistakes) {
+        if (empty($mistakes)) {
             return;
         }
         $output->write("Potential mistakes have been found\n");
